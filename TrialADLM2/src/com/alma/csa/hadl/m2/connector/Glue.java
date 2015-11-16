@@ -1,5 +1,5 @@
 package com.alma.csa.hadl.m2.connector;
 
-public class CallerRole extends Role {
+public class Glue {
 
 }
