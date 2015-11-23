@@ -12,5 +12,12 @@ public class Configuration extends Component {
 		// TODO Auto-generated constructor stub
 	}
 
+	public void addComponent(Component c){
+		components.add(c);
+	}
+	
+	public ArrayList<Component> getComponents(){
+		return components;
+	}
 	
 }

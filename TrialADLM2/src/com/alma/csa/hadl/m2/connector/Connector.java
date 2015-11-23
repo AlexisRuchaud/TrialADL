@@ -1,9 +1,6 @@
 package com.alma.csa.hadl.m2.connector;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 
 public abstract class Connector {
 	
@@ -19,4 +16,37 @@ public abstract class Connector {
 		glue = new Glue();
 		this.name = name;
 	}
+	
+	public void addCallerRole(CallerRole c){
+		callerRoles.add(c);
+	}
+	
+	public void addCalledRole(CalledRole c){
+		calledRoles.add(c);
+	}
+	
+	public ArrayList<CallerRole> getCallerRoles(){
+		return callerRoles;
+	}
+	
+	public ArrayList<CalledRole> getCalledRoles(){
+		return calledRoles;
+	}
+
+	public Glue getGlue() {
+		return glue;
+	}
+
+	public void setGlue(Glue glue) {
+		this.glue = glue;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 }
