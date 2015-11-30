@@ -1,6 +1,6 @@
 package M1.Components;
 
-public class SecurityManager extends M2.component.Component {
+public class SecurityManager extends M2.component.SimpleComponent {
 
 	public SecurityManager(String name) {
 		super(name);
