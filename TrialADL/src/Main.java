@@ -1,9 +1,6 @@
 
 import M1.Components.*;
 import M1.Connectors.*;
-import M1.GLUE.*;
-import M1.Ports.*;
-import M1.Components.*;
 
 public class Main {
 
