@@ -2,9 +2,9 @@ package M1.Services;
 
 import M2.service.ProvidedService;
 
-public class ServerReceiveRequestOut extends ProvidedService {
+public class ClientReceiveRequestService extends ProvidedService {
 
-	public ServerReceiveRequestOut(String name) {
+	public ClientReceiveRequestService(String name) {
 		super(name);
 		// TODO Auto-generated constructor stub
 	}

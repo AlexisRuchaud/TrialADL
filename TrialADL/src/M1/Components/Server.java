@@ -3,8 +3,8 @@ import M1.Ports.*;
 
 public class Server  extends M2.component.Configuration {
 
-	private static ServerSendRequestIn serverSendRequestIn = new ServerSendRequestIn("serverSendRequestIn");
-	private static ServerReceiveRequestOut serverReceiveRequestOut = new ServerReceiveRequestOut("serverReceiveRequestOut");
+	private static ServerSendRequestPort serverSendRequestIn = new ServerSendRequestPort("serverSendRequestIn");
+	private static ServerReceiveRequestPort serverReceiveRequestOut = new ServerReceiveRequestPort("serverReceiveRequestOut");
 	
 
 	public Server(String name) {

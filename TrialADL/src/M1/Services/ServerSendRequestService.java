@@ -2,9 +2,9 @@ package M1.Services;
 
 import M2.service.RequiredService;
 
-public class ClientSendRequestIn extends RequiredService {
+public class ServerSendRequestService extends RequiredService {
 
-	public ClientSendRequestIn(String name) {
+	public ServerSendRequestService(String name) {
 		super(name);
 		// TODO Auto-generated constructor stub
 	}

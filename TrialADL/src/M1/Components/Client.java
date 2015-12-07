@@ -4,8 +4,8 @@ import M1.Ports.*;
 public class Client extends M2.component.SimpleComponent {
 
 
-	private static ClientSendRequestIn sendRequest = new ClientSendRequestIn("sendRequest");
-	private static ClientReceiveRequestOut receiveRequest = new ClientReceiveRequestOut("receiveRequest");
+	private static ClientSendRequestPort sendRequest = new ClientSendRequestPort("sendRequest");
+	private static ClientReceiveRequestPort receiveRequest = new ClientReceiveRequestPort("receiveRequest");
 	
 	
 	public Client(String name) {
