@@ -1,8 +1,9 @@
 package M1.Ports;
 
-import M2.component.RequiredPort;
+import M2.component.ProvidedPort;
 
-public class CheckQueryOut extends RequiredPort {
+
+public class CheckQueryOut extends ProvidedPort {
 
 	public CheckQueryOut(String name) {
 		super(name);
