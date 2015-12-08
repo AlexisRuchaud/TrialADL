@@ -1,11 +1,12 @@
 package M1.Ports;
 
+import M2.component.Component;
 import M2.component.ProvidedPort;
 
 public class DBQueryOut extends ProvidedPort {
 
-	public DBQueryOut(String name) {
-		super(name);
+	public DBQueryOut(String name, Component c) {
+		super(name, c);
 		// TODO Auto-generated constructor stub
 	}
 

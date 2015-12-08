@@ -2,11 +2,13 @@ package M2.component;
 
 import java.util.ArrayList;
 
+import M2.connector.CalledRole;
 import M2.other.Constraint;
 import M2.other.Property;
 
 import M2.service.ProvidedService;
 import M2.service.RequiredService;
+import M2.service.Service;
 
 public abstract class Component {
 	
@@ -41,7 +43,7 @@ public abstract class Component {
 		providedPorts.add(p);
 	}
 	
-	public void addRequiredPOrt(RequiredPort r){
+	public void addRequiredPort(RequiredPort r){
 		requiredPorts.add(r);
 	}
 	
@@ -83,6 +85,29 @@ public abstract class Component {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public void sendRequest(Object o){
+		/*
+		if(this.name == "Server"){
+			System.out.println("Arrivé au serveur");
+			for(Port p :this.getProvidedPorts()){
+				p.sendRequest("Retour");
+			}
+			for(Service s : this.getProvidedServices()){
+				s.sendRequest("Retour");
+			}
+		}else{
+			System.out.println("Passage par : "+ this.getName() + ". Message : "+ o.toString());
+			for(Port p :this.getProvidedPorts()){
+				p.sendRequest(o);
+			}
+			for(Service s : this.getProvidedServices()){
+				s.sendRequest(o);
+			}
+		}
+		*/
+		
 	}
 	
 }

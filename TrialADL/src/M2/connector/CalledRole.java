@@ -1,22 +1,19 @@
 package M2.connector;
 
-public class CalledRole implements Role {
-	private String name;
-	public CalledRole(String name) {
-		this.name = name;
+import java.util.Observable;
+
+public class CalledRole extends Role {
+
+	public CalledRole(String name, Connector c) {
+		super(name,c);
 		// TODO Auto-generated constructor stub
 	}
-
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return name;
+	public void sendRequest(Object o) {
+		System.out.println("Passage par : "+ this.getName() + ". Message : "+ o.toString());
+		this.setChanged();
+		this.notifyObservers(o);
 	}
 
-	@Override
-	public void setName(String n) {
-		// TODO Auto-generated method stub
-		this.name = n;
-	}
 
 }

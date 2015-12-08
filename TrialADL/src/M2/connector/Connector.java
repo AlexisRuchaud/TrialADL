@@ -49,4 +49,12 @@ public abstract class Connector {
 		this.name = name;
 	}
 	
+	public void sendRequest(Object o){	
+		System.out.println("Passage par : "+ this.getName() + ". Message : "+ o.toString());
+		for(CalledRole r : this.getCalledRoles()){
+			r.sendRequest(o);
+		}
+
+	}
+	
 }

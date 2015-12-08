@@ -16,55 +16,24 @@ public class Main {
 
 		// Composant Client
 		Client client = new Client("Client");
-		client.addProvidedPort(new ClientReceiveRequestPort("portClientOut"));
-		client.addRequiredPOrt(new ClientSendRequestPort("portClientIn"));
-		client.addProvidedService(new ClientReceiveRequestService("serviceClientOut"));
-		client.addRequiredService(new ClientSendRequestService("serviceClientIn"));
+		//Composant Server
+		Server server = new Server("Server");
 		
 		//Composant ConnectionManager
-		ConnectionManager connectionManager = new ConnectionManager("connectionManager");
-		connectionManager.addProvidedPort(new SecurityCheckOut("portSecurityCheckOut"));
-		connectionManager.addRequiredPOrt(new SecurityCheckIn("portSecurityCheckInt"));
-		connectionManager.addProvidedService(new SecurityCheck_ServiceOut("serviceSecurityCheckOut"));
-		connectionManager.addRequiredService(new SecurityCheck_ServiceIn("serviceSecurityCheckIn"));
-		connectionManager.addProvidedPort(new DBQueryOut("portDBQueryOut"));
-		connectionManager.addRequiredPOrt(new DBQueryIn("portDBQueryInt"));
-		connectionManager.addProvidedService(new DBQuery_ServiceOut("serviceDBQueryOut"));
-		connectionManager.addRequiredService(new DBQuery_ServiceIn("serviceDBQueryIn"));
+		ConnectionManager connectionManager = new ConnectionManager("connectionManager",server);
 		
 		//Composant Database
 		Database database = new Database("database");
-		database.addProvidedPort(new QueryOut("portQueryOut"));
-		database.addRequiredPOrt(new QueryIn("portQueryInt"));
-		database.addProvidedService(new Query_ServiceOut("serviceQueryOut"));
-		database.addRequiredService(new Query_ServiceIn("serviceQueryIn"));
-		database.addProvidedPort(new SecurityManagementOut("portSecurityManagementOut"));
-		database.addRequiredPOrt(new SecurityManagementIn("portSecurityManagementIn"));
-		database.addProvidedService(new SecurityManagement_ServiceOut("serviceSecurityManagementOut"));
-		database.addRequiredService(new SecurityManagement_ServiceIn("serviceSecurityManagementIn"));
-		
+			
 		//Composant SecurityManager
 		SecurityManager securityManager = new SecurityManager("securityManager");
-		securityManager.addProvidedPort(new CheckQueryOut("portCheckQueryOut"));
-		securityManager.addRequiredPOrt(new CheckQueryIn("portCheckQueryIn"));
-		securityManager.addProvidedService(new CheckQuery_ServiceOut("serviceCheckQueryOut"));
-		securityManager.addRequiredService(new CheckQuery_ServiceIn("serviceCheckQueryIn"));
-		securityManager.addProvidedPort(new SecurityAuthorizationOut("portSecurityAuthorizationOut"));
-		securityManager.addRequiredPOrt(new SecurityAuthorizationIn("portSecurityAuthorizationIn"));
-		securityManager.addProvidedService(new SecurityAuthorization_ServiceOut("serviceSecurityAuthorizationOut"));
-		securityManager.addRequiredService(new SecurityAuthorization_ServiceIn("serviceSecurityAuthorizationIn"));
-		
+			
 		//Configuration Server
-		Configuration server = new Configuration("Server");
+	
 		server.addComponent(connectionManager);
 		server.addComponent(database);
 		server.addComponent(securityManager);
-
-		server.addProvidedPort(new ServerReceiveRequestPort("portServerOut"));
-		server.addRequiredPOrt(new ServerSendRequestPort("portServerIn"));
-		server.addProvidedService(new ServerReceiveRequestService("serviceServiceOut"));
-		server.addRequiredService(new ServerSendRequestService("serviceServerIn"));
-		
+	
 		//Configuration ClientServer
 		Configuration ClientServer = new Configuration("ClientServer");
 		ClientServer.addComponent(client);
@@ -76,24 +45,44 @@ public class Main {
 		SecurityQuery SecurityQuery = new SecurityQuery("SecurityQuery");
 		SQLQuery SQLQuery = new SQLQuery("SQLQuery");
 		
+		//Ajout des glues aux connecteurs
+
 		ClearanceRequest.setGlue(new ClearanceRequestGLUE());
-		ClearanceRequest.addCalledRole(new CalledRole("ClearanceRequestCalled"));
-		ClearanceRequest.addCallerRole(new CallerRole("ClearanceRequestCaller"));
-		
 		rpc.setGlue(new RPCGLUE());
-		rpc.addCalledRole(new CalledRole("rpcCalled"));
-		rpc.addCallerRole(new CallerRole("rpcCaller"));
-		
 		SecurityQuery.setGlue(new SecurityQueryGLUE());
-		SecurityQuery.addCalledRole(new CalledRole("SecurityQueryCalled"));
-		SecurityQuery.addCallerRole(new CallerRole("SecurityQueryCaller"));
-		
 		SQLQuery.setGlue(new SQLQueryGLUE());
-		SQLQuery.addCalledRole(new CalledRole("SQLQueryCalled"));
-		SQLQuery.addCallerRole(new CallerRole("SQLQueryCaller"));
+		
+		//Ajout des connecteurs dans les configurations correspondantes et création des attachements
+		server.addConnector(ClearanceRequest);
+		//server.attach(connectionManager.portSecurityCheckOut, ClearanceRequest.ClearanceRequestCaller);
+		server.attach(connectionManager.portSecurityCheckIn, ClearanceRequest.ClearanceRequestCalled);
+		server.attach(securityManager.portSecurityAuthorizationOut, ClearanceRequest.ClearanceRequestCaller);
+		//server.attach(securityManager.portSecurityAuthorizationIn, ClearanceRequest.ClearanceRequestCalled);
+		
+		server.addConnector(SecurityQuery);
+		server.attach(database.portSecurityManagementOut, SecurityQuery.SecurityQueryCaller);
+		//server.attach(database.portSecurityManagementIn, SecurityQuery.SecurityQueryCalled);
+		//server.attach(securityManager.portCheckQueryOut, SecurityQuery.SecurityQueryCaller);
+		server.attach(securityManager.portCheckQueryIn, SecurityQuery.SecurityQueryCalled);
+		
+		server.addConnector(SQLQuery);
+		//server.attach(database.portQueryOut, SQLQuery.SQLQueryCaller);
+		server.attach(database.portQueryIn,   SQLQuery.SQLQueryCalled);
+		server.attach(connectionManager.portDBQueryOut,   SQLQuery.SQLQueryCaller);
+		//server.attach(connectionManager.portDBQueryIn,   SQLQuery.SQLQueryCalled);
 		
 		
+		ClientServer.addConnector(rpc);
+		ClientServer.attach(client.portClientOut, rpc.rpcCaller);
+		//ClientServer.attach(client.portClientIn, rpc.rpcCalled);
+		//ClientServer.attach(server.portServerOut, rpc.rpcCaller);
+		ClientServer.attach(server.portServerIn, rpc.rpcCalled);
 		
+		ClientServer.bind(server.portServerOut, connectionManager.externalSocket);
+			
+		
+		
+		client.sendRequest("Message");
 	}
 
 }

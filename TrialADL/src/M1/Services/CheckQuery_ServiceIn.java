@@ -1,11 +1,12 @@
 package M1.Services;
 
+import M2.component.Component;
 import M2.service.RequiredService;
 
 public class CheckQuery_ServiceIn extends RequiredService {
 
-	public CheckQuery_ServiceIn(String name) {
-		super(name);
+	public CheckQuery_ServiceIn(String name,Component c) {
+		super(name, c);
 		// TODO Auto-generated constructor stub
 	}
 
