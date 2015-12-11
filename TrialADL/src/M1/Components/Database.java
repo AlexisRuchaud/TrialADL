@@ -38,7 +38,19 @@ public class Database extends M2.component.SimpleComponent {
 	}
 	public void sendRequest(Object o){
 		System.out.println("Passage par : "+ this.getName() + ". Message : "+ o.toString());
+		
+		 switch (o.toString()) {
+         case "Bonjour":  o = "Veuillez vous conecter";
+        	break;
+         case "Michel":  o = "Bonjour Michel, comment allez vous";
+         	break;
+         case "Message":  o = "Renvoyez votre message";
+      	break;
+         case "Aurevoir":  o = "Aurevoir, vous allez nous manquer";
+      	break;
+     }
 		serviceSecurityManagementOut.sendRequest(o);
+		
 	}
 
 }
