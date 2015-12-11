@@ -88,26 +88,6 @@ public abstract class Component {
 	}
 	
 	public void sendRequest(Object o){
-		/*
-		if(this.name == "Server"){
-			System.out.println("Arrivé au serveur");
-			for(Port p :this.getProvidedPorts()){
-				p.sendRequest("Retour");
-			}
-			for(Service s : this.getProvidedServices()){
-				s.sendRequest("Retour");
-			}
-		}else{
-			System.out.println("Passage par : "+ this.getName() + ". Message : "+ o.toString());
-			for(Port p :this.getProvidedPorts()){
-				p.sendRequest(o);
-			}
-			for(Service s : this.getProvidedServices()){
-				s.sendRequest(o);
-			}
-		}
-		*/
-		
 	}
 	
 }

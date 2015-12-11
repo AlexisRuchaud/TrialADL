@@ -1,25 +1,35 @@
 package M1.Connectors;
 
-import M1.GLUE.RPCGLUE;
-import M1.Roles.RoleCalled;
-import M1.Roles.RoleCaller;
+import M1.Roles.*;
 
 public class RPC extends M2.connector.Connector {
 	
 	
-	public RoleCalled rpcCalled;
-	public RoleCaller rpcCaller;
-
+	public rpcCalled rpcCalled;
+	public rpcCaller rpcCaller;
+	public rpcCalled calledRpc;
+	public rpcCaller callerRpc;
+	public boolean pass;
 
 	public RPC(String name) {
 		super(name);
-		rpcCalled = new RoleCalled("rpcCalled",this);
-		rpcCaller = new RoleCaller("rpcCaller",this);
+		rpcCalled = new rpcCalled("rpcCalled",this);
+		rpcCaller = new rpcCaller("rpcCaller",this);
+		calledRpc = new rpcCalled("calledRpc",this);
+		callerRpc = new rpcCaller("callerRpc",this);
+		this.pass = false;
 		// TODO Auto-generated constructor stub
 	}
 	public void sendRequest(Object o){
-		System.out.println("Passage par : "+ this.getName() + ". Message : "+ o.toString());
-		rpcCalled.sendRequest(o);
+		if(!pass){
+			System.out.println("Passage par : "+ this.getName() + ". Message : "+ o.toString());
+			pass = true;
+			rpcCalled.sendRequest(o);
+		}else{
+			System.out.println("Passage par : "+ this.getName() + ". Message : "+ o.toString());
+			calledRpc.sendRequest(o);
+		}
+		
 	}
 
 }

@@ -1,9 +1,9 @@
 package M1.Ports;
 
 import M2.component.Component;
-import M2.component.RequiredPort;
+import M2.component.ProvidedPort;
 
-public class ClientSendRequestPort extends RequiredPort {
+public class ClientSendRequestPort extends ProvidedPort {
 
 	public ClientSendRequestPort(String name, Component c) {
 		super(name, c);

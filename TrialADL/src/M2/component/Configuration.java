@@ -48,12 +48,12 @@ public class Configuration extends Component {
 	
 	public void attach(Port p, Role r){
 		if(p instanceof ProvidedPort){
-			AttachementTo a = new AttachementTo("Attachement : "+ p.getName()+" To "+r.getName());
+			AttachementTo a = new AttachementTo("Attachement"+ p.getName()+"To"+r.getName());
 			p.addObserver(a);
-			a.addObserver((RoleCaller)r);
+			a.addObserver((CallerRole)r);
 			attachements.add(a);
 		}else{
-			AttachementTo a = new  AttachementTo("Attachement : "+r.getName()+" To "+p.getName());
+			AttachementTo a = new  AttachementTo("Attachement"+r.getName()+"To"+p.getName());
 			r.addObserver(a);
 			a.addObserver((RequiredPort)p);
 			attachements.add(a);
@@ -68,5 +68,6 @@ public class Configuration extends Component {
 			bindings.add(b);
 		//}
 	}
+	
 	
 }

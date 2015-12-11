@@ -18,6 +18,7 @@ public class ConnectionManager extends M2.component.SimpleComponent {
 	public DBQuery_ServiceIn serviceDBQueryIn;
 	public ExternalSocket externalSocket;
 	public Component parent;
+	public boolean pass;
 	public ConnectionManager(String name,Component parent) {
 		super(name);
 		portSecurityCheckOut = new SecurityCheckOut("portSecurityCheckOut",this);
@@ -38,10 +39,17 @@ public class ConnectionManager extends M2.component.SimpleComponent {
 		serviceSecurityCheckIn.addPort(portSecurityCheckIn);
 		serviceDBQueryOut.addPort(portDBQueryOut);
 		serviceDBQueryIn.addPort(portDBQueryIn);
+		this.pass = false;
 		// TODO Auto-generated constructor stub
 	}
 	public void sendRequest(Object o){
-		System.out.println("Passage par : "+ this.getName() + ". Message : "+ o.toString());
-		//serviceDBQueryOut.sendRequest(o);
+		if(!pass){
+			System.out.println("Passage par : "+ this.getName() + ". Message : "+ o.toString());
+			pass = true;
+			serviceDBQueryOut.sendRequest(o);
+		}else{
+			System.out.println("Passage par : "+ this.getName() + ". Message : "+ o.toString());
+			parent.sendRequest(o);
+		}
 	}
 }

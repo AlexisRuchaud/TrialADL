@@ -54,31 +54,26 @@ public class Main {
 		
 		//Ajout des connecteurs dans les configurations correspondantes et création des attachements
 		server.addConnector(ClearanceRequest);
-		server.attach(connectionManager.portSecurityCheckOut, ClearanceRequest.ClearanceRequestCaller);
 		server.attach(connectionManager.portSecurityCheckIn, ClearanceRequest.ClearanceRequestCalled);
 		server.attach(securityManager.portSecurityAuthorizationOut, ClearanceRequest.ClearanceRequestCaller);
-		server.attach(securityManager.portSecurityAuthorizationIn, ClearanceRequest.ClearanceRequestCalled);
 		
 		server.addConnector(SecurityQuery);
 		server.attach(database.portSecurityManagementOut, SecurityQuery.SecurityQueryCaller);
-		server.attach(database.portSecurityManagementIn, SecurityQuery.SecurityQueryCalled);
-		server.attach(securityManager.portCheckQueryOut, SecurityQuery.SecurityQueryCaller);
 		server.attach(securityManager.portCheckQueryIn, SecurityQuery.SecurityQueryCalled);
 		
 		server.addConnector(SQLQuery);
-		server.attach(database.portQueryOut, SQLQuery.SQLQueryCaller);
 		server.attach(database.portQueryIn,   SQLQuery.SQLQueryCalled);
 		server.attach(connectionManager.portDBQueryOut,   SQLQuery.SQLQueryCaller);
-		server.attach(connectionManager.portDBQueryIn,   SQLQuery.SQLQueryCalled);
 		
 		
 		ClientServer.addConnector(rpc);
 		ClientServer.attach(client.portClientOut, rpc.rpcCaller);
-		ClientServer.attach(client.portClientIn, rpc.rpcCalled);
-		ClientServer.attach(server.portServerOut, rpc.rpcCaller);
+		ClientServer.attach(client.portClientIn, rpc.calledRpc);
+		ClientServer.attach(server.portServerOut, rpc.callerRpc);
 		ClientServer.attach(server.portServerIn, rpc.rpcCalled);
 		
-		ClientServer.bind(server.portServerOut, connectionManager.externalSocket);
+		
+		ClientServer.bind(server.portSendBinding, connectionManager.externalSocket);
 			
 		
 		
